@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Poketori</title>
+  <style>
+    .done {
+      text-decoration: line-through
+    }
+  </style>
+</head>
+
+<body>
+  <div class="root">
+    <button id="start">Generate First</button>
+  </div>
+  <form action="#">
+    <input type="text" name="" id="input">
+    <button type="submit" id="submit">submit</button>
+  </form>
+  <p>number of correct answers:
+    <span id="correct-answer-counter"></span>
+  </p>
+  <p>Timer: <span id="timer-value"></span></p>
+  <button id="stop">stop timer</button>
+  <h2>todo</h2>
+  <ul>
+    <li class="done">counter for each right answer - done</li>
+    <li class="done">check if answer has already been used - done</li>
+    <li class="done">disable generate button while generating and enable when finished - done</li>
+    <li class="done">put links in a closure and expose them to the two event listeners, then build the species link in the listener with the appropriate value in the link (selected / val)</li>
+    <li class="done">timer</li>
+    <li>hook up rest of timer events</li>
+    <li>set up closure for types of current mon state</li>
+    <li>styling</li>
+  </ul>
+  <script src="poketori.js"></script>
+</body>
+
+</html>
