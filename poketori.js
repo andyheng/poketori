@@ -79,6 +79,28 @@ const correctAnswerCounter = (function () {
   }
 })();
 
+const timerCount = (() => {
+  let timer;
+  return {
+    startCounter: function() {
+      let num = 10;
+      timer = setInterval(() => {
+        num--;
+        if (num === 0) {
+          document.querySelector("#timer-value").textContent = 0;
+          handleInputsDisabledState(true);
+          this.stopCounter();
+        } else {
+          document.querySelector("#timer-value").textContent = num;
+        }
+      }, 1000);
+    },
+    stopCounter: function() {
+      clearInterval(timer);
+    }
+  }
+})()
+
 const handleInputsDisabledState = (bool) => {
   if (bool) {
     selectors.getInput().disabled = true;
@@ -97,6 +119,18 @@ const handleInputOnLoad = () => {
 const selectRandom = () => {
   const total = 802;
   return Math.floor(Math.random() * total) + 1;
+}
+
+const checkInputType = (input, prev) => {
+  // iterate over input type
+  // for each input array item...
+  // check if indexof prev > 0
+  return input.map(pokemon => {
+    return pokemon.type.name;
+  })
+    .some(pokemon => {
+      return prev.indexOf(pokemon) !== -1;
+    })
 }
 
 //button
@@ -133,10 +167,7 @@ const fetchData = (speciesUrl) => {
 const initialize = (selected) => {
   handleInputsDisabledState(true)
   trackUsedPokemon.resetArr()
-  // const speciesUrl = `https://cors-anywhere.herokuapp.com/http://pokeapi.co/api/v2/pokemon-species/${selected}`;
   const speciesUrl = fetchUrls().getSpeciesUrl(selected);
-  // const pokemonUrl = `https://cors-anywhere.herokuapp.com/http://pokeapi.co/api/v2/pokemon/`;
-  // const pokemonUrl = fetchUrls().getPokemonUrl();
   return fetchData(speciesUrl);
 }
 
@@ -229,8 +260,6 @@ document.querySelector("form").addEventListener("submit", (e) => {
   const input = selectors.getInput();
   const val = input.value;
   const button = selectors.getSubmitBtn();
-  // const types = document.querySelectorAll("p");
-  // const typesArr = Array.from(types, item => item.textContent);
   const checkIfAlreadyUsed = trackUsedPokemon.returnArr().indexOf(val);
   console.log(checkIfAlreadyUsed);
   timerCount.stopCounter();
@@ -259,40 +288,6 @@ document.querySelector("form").addEventListener("submit", (e) => {
       })
   }
 })
-
-const checkInputType = (input, prev) => {
-  // iterate over input type
-  // for each input array item...
-  // check if indexof prev > 0
-  return input.map(pokemon => {
-    return pokemon.type.name;
-  })
-    .some(pokemon => {
-      return prev.indexOf(pokemon) !== -1;
-    })
-}
-
-const timerCount = (() => {
-  let timer;
-  return {
-    startCounter: function() {
-      let num = 10;
-      timer = setInterval(() => {
-        num--;
-        if (num === 0) {
-          document.querySelector("#timer-value").textContent = 0;
-          handleInputsDisabledState(true);
-          this.stopCounter();
-        } else {
-          document.querySelector("#timer-value").textContent = num;
-        }
-      }, 1000);
-    },
-    stopCounter: function() {
-      clearInterval(timer);
-    }
-  }
-})()
 
 document.getElementById("stop").addEventListener("click", function() {
   timerCount.stopCounter()
